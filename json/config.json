@@ -1,0 +1,16 @@
+{
+  "shardCount": 1,
+  "disableEvents": {},
+  "commandSets": {
+    "!!": {
+      "dir": "commands/all/"
+    }
+  },
+  "reloadCommand": "~!!reload",
+  "evalCommand": "~!!eval",
+  "adminIds": ["135632493217972224"],
+  "logTimestamp": true,
+  "errorMessage": "HELP!",
+  "cycleGames": true,
+  "embedColor": "0xc16d5b"
+}
