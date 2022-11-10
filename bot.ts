@@ -7,8 +7,8 @@ import { Logger } from "./utils/logger.js";
 import settings from "./utils/settings.js";
 import { validateConfig } from "./utils/validateConfig.js";
 
-import * as _config from "./json/config.json";
-import * as _games from "./json/games.json";
+import * as _config from "./json/config.json" assert { type: "json" };
+import * as _games from "./json/games.json" assert { type: "json" };
 
 let logger;
 let BotClient;
@@ -35,7 +35,7 @@ async function initReady(index = 0) {
       await initReady(index);
     }
   } catch (e) {
-    logger.default(`Started the CommandManger ${index}`, "INIT");
+    logger.debug(`Started the CommandManger ${index}`, "INIT");
   }
 }
 
@@ -74,10 +74,10 @@ async function loadEvents() {
       file = file.replace(/\.js$/, "");
 
       try {
-        events[file] = await import(`./dist/events/${name}.js`);
-        initEvent(name);
+        events[file] = await import(`./events/${file}.js`);
+        initEvent(file);
       } catch (e) {
-        logger.erorr(
+        logger.error(
           `${e}\n${e.stack}`,
           "Error loading " + file.replace(/\.js$/, "")
         );
@@ -112,10 +112,15 @@ async function login() {
   }
 }
 
+function initPlayer() {
+  global.player = undefined;
+}
+
 const init = async () => {
   try {
     await validateConfig(config);
   } catch (e) {
+    console.log(e);
     process.exit(e);
   }
 
@@ -136,6 +141,7 @@ const init = async () => {
     await loadEvents();
     miscEvents();
     await login();
+    initPlayer();
   } catch (e) {
     logger.error(e, "Error in ready");
   }
@@ -151,7 +157,7 @@ setInterval(() => {
       let game = games[~~(Math.random() * games.length)];
 
       shard.editStatus(null, {
-        name: name,
+        name: game,
         type: 0,
       });
     });

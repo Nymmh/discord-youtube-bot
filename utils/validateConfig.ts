@@ -6,7 +6,7 @@ var logger;
 export function validateConfig(config: any) {
   if (logger === undefined) logger = new Logger(config.default.logTimestamp);
 
-  if (!process.env.APItoken) {
+  if (!process.env.token) {
     logger.error("Missing token");
     throw new Error();
   }

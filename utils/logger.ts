@@ -95,4 +95,29 @@ export class Logger {
       color ? chalk[color](text) : text
     );
   }
+
+  /**
+   * @arg {String} text
+   * @arg {String} [color]
+   */
+  async logBold(text, color) {
+    try {
+      await fs.promises.appendFile(log, this.timestamp + `${text}\r`);
+    } catch (e) {
+      return this.error(this.timestamp + `${chalk.bgRed.black(`ERROR`)} ${e}`);
+    }
+    return console.log(
+      this.timestamp + (color ? chalk.bold[color](text) : chalk.bold(text))
+    );
+  }
+
+  /**
+   * @arg {String} text
+   * @arg {String} [debugText="DEBUG"]
+   */
+  debug(text, debugText = "DEBUG") {
+    return console.log(
+      this.timestamp + `${chalk.bgWhite.black(`${debugText}`)} ${text}`
+    );
+  }
 }

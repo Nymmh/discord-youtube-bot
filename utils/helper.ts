@@ -149,7 +149,7 @@ export class helper {
       } catch (e) {
         logger.error(e);
       }
-    } else if (!config.default.adminsIds.includes(msg.author.id)) {
+    } else if (!config.default.adminIds.includes(msg.author.id)) {
       this.usersOnCooldown.add(msg.author.id);
 
       setTimeout(() => {
@@ -180,11 +180,11 @@ export class helper {
         name === str || name.startsWith(str) || name.includes(str);
 
       const member = guild.member.find((m) => {
-        if (m.nick && isMemberName(m.nick.toLowercase(), str.toLowercase())) {
+        if (m.nick && isMemberName(m.nick.toLowerCase(), str.toLowerCase())) {
           return true;
         }
 
-        return isMemberName(m.user.username.toLowercase(), str.toLowercase());
+        return isMemberName(m.user.username.toLowerCase(), str.toLowerCase());
       });
 
       return member ? member.user : false;

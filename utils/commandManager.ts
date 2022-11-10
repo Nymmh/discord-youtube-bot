@@ -174,11 +174,11 @@ export class CommandManager {
    * @arg {settings} settings [settings]{@link settings}
    */
   async processCommand(BotClient, msg, config, settings) {
-    let name = msg.content.replace(this.prefix, "").split(/ |\n /)[0];
-    let command = this.checkForMatch(name.toLowercase());
+    let name: string = msg.content.replace(this.prefix, "").split(/ |\n /)[0];
+    let command = this.checkForMatch(name.toLowerCase());
     let suffix = msg.content.replace(this.prefix + name, "").trim();
 
-    if (name.toLowercase() === "help") {
+    if (name.toLowerCase() === "help") {
       await this.help(BotClient, msg, suffix);
     } else if (command !== null) {
       if (command[name]) {
